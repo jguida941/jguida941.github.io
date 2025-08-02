@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computational Theory & Cryptographic Research Lab</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e27;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Back to Portfolio Button */
+        .back-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(0, 255, 136, 0.3);
+            color: #00ff88;
+            transform: translateX(-3px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 40px 80px;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        /* Research Sections */
+        .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
+        }
+
+        .research-section {
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px 30px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        /* Subtle accent colors for each section */
+        .research-section:nth-child(1) {
+            border-left: 3px solid #00ff88;
+        }
+
+        .research-section:nth-child(2) {
+            border-left: 3px solid #ff6b6b;
+        }
+
+        .research-section:nth-child(3) {
+            border-left: 3px solid #4dabf7;
+        }
+
+        .research-section:nth-child(4) {
+            border-left: 3px solid #ffa94d;
+        }
+
+        .research-section:nth-child(5) {
+            border-left: 3px solid #8b5cf6;
+        }
+
+        /* Apple-style hover effect */
+        .research-section:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: none;
+            letter-spacing: -0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .research-section:hover .section-title {
+            color: #ffffff;
+        }
+
+        .expand-icon {
+            font-size: 16px;
+            transition: transform 0.3s ease;
+            color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .section-header:hover .expand-icon {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .section-header.active .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Grid Layouts */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 136, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-card h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            color: #00ff88;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 100px;
+            padding: 50px 40px;
+            background: rgba(0, 0, 0, 0.5);
+            text-align: center;
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .section-title {
+                font-size: 1.2em;
+            }
+            
+            .content-wrapper {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Navigation -->
+    <div class="back-nav">
+        <a href="index.html" class="back-btn">
+            <span>←</span>
+            <span>Back to Portfolio</span>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Computational Theory & Cryptographic Research</h1>
+        <p>Exploring Prime Numbers, Graph Algorithms, SAT Solving, and Modern Cryptography</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+        
+        <!-- Prime Theory Section -->
+        <section class="research-section">
+            <div class="section-header" onclick="toggleSection('prime-content')">
+                <h2 class="section-title">Prime Theory Laboratory</h2>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div id="prime-content" class="section-content">
+                <p>Research into prime number generation, testing algorithms, and number theory applications.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Primality Testing</h3>
+                        <p>Miller-Rabin, Solovay-Strassen, and AKS algorithms implementation and analysis.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Sieve Methods</h3>
+                        <p>Optimized implementations of Eratosthenes, Atkin, and segmented sieves.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Prime Patterns</h3>
+                        <p>Research into twin primes, prime gaps, and Goldbach's conjecture.</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre>
+# Example: Miller-Rabin Primality Test
+def is_prime_miller_rabin(n, k=5):
+    if n < 2:
+        return False
+    if n == 2 or n == 3:
+        return True
+    if n % 2 == 0:
+        return False
+    
+    # Write n-1 as 2^r * d
+    r, d = 0, n - 1
+    while d % 2 == 0:
+        r += 1
+        d //= 2
+    
+    # Witness loop
+    for _ in range(k):
+        a = random.randrange(2, n - 1)
+        x = pow(a, d, n)
+        
+        if x == 1 or x == n - 1:
+            continue
+            
+        for _ in range(r - 1):
+            x = pow(x, 2, n)
+            if x == n - 1:
+                break
+        else:
+            return False
+    
+    return True
+                    </pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Graph Algorithms Section -->
+        <section class="research-section">
+            <div class="section-header" onclick="toggleSection('graph-content')">
+                <h2 class="section-title">Graph Algorithms Workshop</h2>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div id="graph-content" class="section-content">
+                <p>Advanced graph theory implementations focusing on shortest path algorithms and network analysis.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Dijkstra's Algorithm</h3>
+                        <p>Optimized implementations with Fibonacci heaps and binary heaps.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Network Flow</h3>
+                        <p>Max flow algorithms: Ford-Fulkerson, Edmonds-Karp, Push-Relabel.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Graph Visualization</h3>
+                        <p>Interactive visualization of graph algorithms in action.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SAT Solving Section -->
+        <section class="research-section">
+            <div class="section-header" onclick="toggleSection('sat-content')">
+                <h2 class="section-title">SAT Solver & Boolean Algebra</h2>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div id="sat-content" class="section-content">
+                <p>Boolean satisfiability problem solvers and applications in formal verification.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>DPLL Algorithm</h3>
+                        <p>Implementation of Davis-Putnam-Logemann-Loveland algorithm.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>CDCL Solver</h3>
+                        <p>Conflict-Driven Clause Learning with modern optimizations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>CNF/DNF Tools</h3>
+                        <p>Converters and simplifiers for Boolean expressions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cryptography Section -->
+        <section class="research-section">
+            <div class="section-header" onclick="toggleSection('crypto-content')">
+                <h2 class="section-title">Cryptography Research Suite</h2>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div id="crypto-content" class="section-content">
+                <p>Modern cryptographic implementations and security analysis tools.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Hash Functions</h3>
+                        <p>Analysis of SHA-3, Blake2, Argon2 and custom implementations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Encryption Algorithms</h3>
+                        <p>AES, ChaCha20, and post-quantum cryptography research.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Security Analysis</h3>
+                        <p>Vulnerability research and cryptanalysis techniques.</p>
+                        <a href="password-security.html" style="color: #00ff88; text-decoration: none;">
+                            → View Password Security Research
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publications Section -->
+        <section class="research-section">
+            <div class="section-header" onclick="toggleSection('pub-content')">
+                <h2 class="section-title">Research Publications & Papers</h2>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div id="pub-content" class="section-content">
+                <p>Academic papers, research findings, and technical documentation.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Recent Papers</h3>
+                        <p>Latest research publications and conference presentations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Technical Reports</h3>
+                        <p>In-depth analysis and algorithm performance studies.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Open Research</h3>
+                        <p>Ongoing projects and collaborative research opportunities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 Computational Theory & Cryptographic Research Lab</p>
+    </footer>
+
+    <script>
+        // Toggle section visibility
+        function toggleSection(contentId) {
+            const content = document.getElementById(contentId);
+            const header = content.previousElementSibling;
+            
+            content.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        // Add subtle animation on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.research-section');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    section.style.transition = 'all 0.5s ease';
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
