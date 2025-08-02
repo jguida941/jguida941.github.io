@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computational Theory & Cryptographic Research Lab</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e27;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .prime-numbers {
+            position: absolute;
+            color: rgba(0, 255, 136, 0.15);
+            font-family: 'Monaco', monospace;
+            font-size: 14px;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            from { transform: translateY(100vh) translateX(0); }
+            to { transform: translateY(-100px) translateX(100px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        /* Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+            z-index: 1000;
+            padding: 20px 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #00ff88;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 100px 40px;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 4em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 50%, #00ff88 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero p {
+            font-size: 1.5em;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        /* Research Sections */
+        .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .research-section {
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px 30px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        /* Subtle accent colors for each section */
+        .research-section:nth-child(1) {
+            border-left: 3px solid #00ff88;
+        }
+
+        .research-section:nth-child(2) {
+            border-left: 3px solid #ff6b6b;
+        }
+
+        .research-section:nth-child(3) {
+            border-left: 3px solid #4dabf7;
+        }
+
+        .research-section:nth-child(4) {
+            border-left: 3px solid #ffa94d;
+        }
+
+        .research-section:nth-child(5) {
+            border-left: 3px solid #8b5cf6;
+        }
+
+        .research-section:nth-child(6) {
+            border-left: 3px solid #ffd93d;
+        }
+
+        /* Apple-style hover effect */
+        .research-section:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: none;
+            letter-spacing: -0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .research-section:hover .section-title {
+            color: #ffffff;
+        }
+
+        .expand-icon {
+            font-size: 16px;
+            transition: transform 0.3s ease;
+            color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .section-header:hover .expand-icon {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .section-header.active .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Grid Layouts */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 136, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-card h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+        }
+
+        /* App Embed Areas */
+        .app-embed {
+            background: #000;
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            padding: 40px;
+            margin: 30px 0;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .app-embed::before {
+            content: 'PYQT6 APP EMBED AREA';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 12px;
+            color: #00ff88;
+            letter-spacing: 2px;
+            opacity: 0.5;
+        }
+
+        .placeholder-text {
+            color: rgba(0, 255, 136, 0.5);
+            font-size: 1.2em;
+            font-family: 'Monaco', monospace;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            color: #00ff88;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Blog Posts Section */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .blog-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 136, 0.3);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .blog-date {
+            color: #00ff88;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .blog-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .blog-excerpt {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 100px;
+            padding: 50px 40px;
+            background: rgba(0, 0, 0, 0.5);
+            text-align: center;
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .social-links a {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #00ff88;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .section-title {
+                font-size: 1.8em;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .content-wrapper {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">Research Lab</div>
+            <ul class="nav-links">
+                <li><a href="#prime-theory">Prime Theory</a></li>
+                <li><a href="#graph-algorithms">Graphs</a></li>
+                <li><a href="#sat-solving">SAT/Boolean</a></li>
+                <li><a href="#cryptography">Cryptography</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#tools">Tools</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Computational Theory & Cryptographic Research</h1>
+        <p>Exploring Prime Numbers, Graph Algorithms, SAT Solving, and Modern Cryptography</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+        
+        <!-- Prime Theory Section -->
+        <section id="prime-theory" class="research-section">
+            <div class="section-header" onclick="toggleSection('prime-content')">
+                <h2 class="section-title">Prime Theory Laboratory</h2>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div id="prime-content" class="section-content">
+                <p>Research into prime number generation, testing algorithms, and number theory applications.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Primality Testing</h3>
+                        <p>Miller-Rabin, Solovay-Strassen, and AKS algorithms implementation and analysis.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Sieve Methods</h3>
+                        <p>Optimized implementations of Eratosthenes, Atkin, and segmented sieves.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Prime Patterns</h3>
+                        <p>Research into twin primes, prime gaps, and Goldbach's conjecture.</p>
+                    </div>
+                </div>
+
+                <div class="app-embed">
+                    <div class="placeholder-text">
+                        [ PyQt6 Prime Testing Application ]<br>
+                        Coming Soon: Interactive prime number analyzer
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre>
+# Example: Miller-Rabin Primality Test
+def is_prime_miller_rabin(n, k=5):
+    if n < 2:
+        return False
+    if n == 2 or n == 3:
+        return True
+    if n % 2 == 0:
+        return False
+    
+    # Write n-1 as 2^r * d
+    r, d = 0, n - 1
+    while d % 2 == 0:
+        r += 1
+        d //= 2
+    
+    # Witness loop
+    for _ in range(k):
+        a = random.randrange(2, n - 1)
+        x = pow(a, d, n)
+        
+        if x == 1 or x == n - 1:
+            continue
+            
+        for _ in range(r - 1):
+            x = pow(x, 2, n)
+            if x == n - 1:
+                break
+        else:
+            return False
+    
+    return True
+                    </pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Graph Algorithms Section -->
+        <section id="graph-algorithms" class="research-section">
+            <div class="section-header" onclick="toggleSection('graph-content')">
+                <h2 class="section-title">Graph Algorithms Workshop</h2>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div id="graph-content" class="section-content">
+                <p>Advanced graph theory implementations focusing on shortest path algorithms and network analysis.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Dijkstra's Algorithm</h3>
+                        <p>Optimized implementations with Fibonacci heaps and binary heaps.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Network Flow</h3>
+                        <p>Max flow algorithms: Ford-Fulkerson, Edmonds-Karp, Push-Relabel.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Graph Visualization</h3>
+                        <p>Interactive visualization of graph algorithms in action.</p>
+                    </div>
+                </div>
+
+                <div class="app-embed">
+                    <div class="placeholder-text">
+                        [ PyQt6 Graph Visualizer ]<br>
+                        Coming Soon: Interactive Dijkstra's algorithm demonstration
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SAT Solving Section -->
+        <section id="sat-solving" class="research-section">
+            <div class="section-header" onclick="toggleSection('sat-content')">
+                <h2 class="section-title">SAT Solver & Boolean Algebra</h2>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div id="sat-content" class="section-content">
+                <p>Boolean satisfiability problem solvers and applications in formal verification.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>DPLL Algorithm</h3>
+                        <p>Implementation of Davis-Putnam-Logemann-Loveland algorithm.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>CDCL Solver</h3>
+                        <p>Conflict-Driven Clause Learning with modern optimizations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>CNF/DNF Tools</h3>
+                        <p>Converters and simplifiers for Boolean expressions.</p>
+                    </div>
+                </div>
+
+                <div class="app-embed">
+                    <div class="placeholder-text">
+                        [ PyQt6 SAT Solver Interface ]<br>
+                        Coming Soon: Boolean satisfiability solver with visualization
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cryptography Section -->
+        <section id="cryptography" class="research-section">
+            <div class="section-header" onclick="toggleSection('crypto-content')">
+                <h2 class="section-title">Cryptography Research Suite</h2>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div id="crypto-content" class="section-content">
+                <p>Modern cryptographic implementations and security analysis tools.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Hash Functions</h3>
+                        <p>Analysis of SHA-3, Blake2, Argon2 and custom implementations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Encryption Algorithms</h3>
+                        <p>AES, ChaCha20, and post-quantum cryptography research.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Security Analysis</h3>
+                        <p>Vulnerability research and cryptanalysis techniques.</p>
+                        <a href="password-security.html" style="color: #00ff88; text-decoration: none;">
+                            → View Password Security Research
+                        </a>
+                    </div>
+                </div>
+
+                <div class="app-embed">
+                    <div class="placeholder-text">
+                        [ PyQt6 Cryptography Toolkit ]<br>
+                        Coming Soon: Encryption/decryption tools and hash calculators
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="research-section">
+            <div class="section-header" onclick="toggleSection('blog-content')">
+                <h2 class="section-title">Recent Research & Findings</h2>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div id="blog-content" class="section-content">
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <div class="blog-date">January 2025</div>
+                        <h3 class="blog-title">Advanced Password Security Analysis</h3>
+                        <p class="blog-excerpt">Deep dive into modern password attack vectors and defense mechanisms...</p>
+                    </div>
+                    <div class="blog-card">
+                        <div class="blog-date">Coming Soon</div>
+                        <h3 class="blog-title">Optimizing Prime Sieves for Large Numbers</h3>
+                        <p class="blog-excerpt">New techniques for generating primes beyond 10^12 efficiently...</p>
+                    </div>
+                    <div class="blog-card">
+                        <div class="blog-date">Coming Soon</div>
+                        <h3 class="blog-title">Graph Algorithms in Network Security</h3>
+                        <p class="blog-excerpt">Applying shortest path algorithms to detect network intrusions...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools & Resources Section -->
+        <section id="tools" class="research-section">
+            <div class="section-header" onclick="toggleSection('tools-content')">
+                <h2 class="section-title">Tools & Resources</h2>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div id="tools-content" class="section-content">
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Downloads</h3>
+                        <p>Standalone PyQt6 applications for Windows, macOS, and Linux.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Source Code</h3>
+                        <p>All research implementations available on GitHub.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Documentation</h3>
+                        <p>Detailed API documentation and research papers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 Computational Theory & Cryptographic Research Lab</p>
+        <div class="social-links">
+            <a href="https://github.com/jguida941">GitHub</a>
+            <a href="#">Twitter</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Email</a>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle section visibility with smooth animation
+        function toggleSection(contentId) {
+            const content = document.getElementById(contentId);
+            const header = content.previousElementSibling;
+            const section = content.parentElement;
+            
+            content.classList.toggle('active');
+            header.classList.toggle('active');
+            
+            // Add pulse animation
+            section.style.animation = 'pulse 0.5s ease';
+            setTimeout(() => {
+                section.style.animation = '';
+            }, 500);
+        }
+
+        // Animate prime numbers in background
+        function createPrimeAnimation() {
+            const primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71];
+            const bgAnimation = document.getElementById('bgAnimation');
+            
+            primes.forEach((prime, index) => {
+                const span = document.createElement('span');
+                span.className = 'prime-numbers';
+                span.textContent = prime;
+                span.style.left = Math.random() * 100 + '%';
+                span.style.animationDelay = (index * 0.5) + 's';
+                span.style.fontSize = (Math.random() * 10 + 12) + 'px';
+                span.style.opacity = Math.random() * 0.5 + 0.2;
+                bgAnimation.appendChild(span);
+            });
+        }
+
+        // Initialize animations
+        createPrimeAnimation();
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
