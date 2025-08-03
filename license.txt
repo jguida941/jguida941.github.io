@@ -1,0 +1,9 @@
+Copyright (c) 2025 Justin Guida
+
+This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. 
+To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+
+You may copy, redistribute, and adapt the material under the following terms:
+
+- Attribution: You must give appropriate credit, provide a link to the license, and indicate if changes were made.
+- NonCommercial: You may not use the material for commercial purposes.
